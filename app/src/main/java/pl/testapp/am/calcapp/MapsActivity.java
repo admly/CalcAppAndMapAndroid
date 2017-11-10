@@ -59,7 +59,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15.0f));
         circle = mMap.addCircle(new CircleOptions().center(latlng).radius(300));
 
-        Toast.makeText(getBaseContext(), TEXT_WELCOME, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), TEXT_WELCOME, Toast.LENGTH_LONG).show();
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
