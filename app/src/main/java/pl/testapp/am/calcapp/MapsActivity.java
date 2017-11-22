@@ -3,6 +3,7 @@ package pl.testapp.am.calcapp;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +16,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DecimalFormat;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final double LAT = 51.75924850;
@@ -22,11 +25,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final String TEXT_WELCOME = "Okrąg pokazuje obszar naszego działania, kliknij, by sprawdzić czy jesteś w zasięgu";
     public static final String TEXT_POZA_OBSZAREM = "Poza obszarem, prowadzimy działalność w zasięgu zaznaczonego koła";
     public static final String TEXT_W_OBSZARZE = "W obszarze działania";
+    private static final String INITIAL_TEXT_MAP = "Tu pojawią się koszty dostawy, jesli znajdziesz się poza obszarem naszego działania";
 
     private GoogleMap mMap;
     private Circle circle;
     private LatLng latlng;
-
+    DecimalFormat formatter = new DecimalFormat("#.00");
+    TextView tvMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        tvMap = (TextView) findViewById(R.id.tvMap);
+        tvMap.setText(INITIAL_TEXT_MAP);
         latlng = new LatLng(LAT, LNG);
         mMap = googleMap;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15.0f));
@@ -70,6 +77,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Location.distanceBetween(circle.getCenter().latitude, circle.getCenter().longitude,
                         marker1.getPosition().latitude, marker1.getPosition().longitude, distance);
                 if( distance[0] > circle.getRadius()  ){
+                    tvMap.setText("Koszty dostawy: "+formatter.format(distance[0]/1000 *10)+CalcActivity.WALUTA);
+
                     Toast.makeText(getBaseContext(), TEXT_POZA_OBSZAREM, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), TEXT_W_OBSZARZE, Toast.LENGTH_SHORT).show();
