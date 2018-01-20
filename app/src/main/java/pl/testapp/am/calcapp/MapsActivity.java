@@ -79,11 +79,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 float[] distance = {0};
                 Location.distanceBetween(circle.getCenter().latitude, circle.getCenter().longitude,
                         marker1.getPosition().latitude, marker1.getPosition().longitude, distance);
-                if( distance[0] > circle.getRadius()  ){
-                    tvMap.setText("Koszty dostawy: "+formatter.format(distance[0]/1000 *10)+CalcActivity.WALUTA);
-
+                if(distance[0] > circle.getRadius() && distance[0]< 10*circle.getRadius() ){
+                    tvMap.setText("Koszty dostawy: "+formatter.format(getNumber(distance[0]))+CalcActivity.WALUTA);
                     Toast.makeText(getBaseContext(), TEXT_POZA_OBSZAREM, Toast.LENGTH_SHORT).show();
-                } else {
+                }if(distance[0]> 10*circle.getRadius() ) {
+                    tvMap.setText("Za daleko ! Poza tym obszarem nie dowozimy");
+                }
+                if(distance[0] < circle.getRadius()) {
                     Toast.makeText(getBaseContext(), TEXT_W_OBSZARZE, Toast.LENGTH_SHORT).show();
                     tvMap.setText(INITIAL_TEXT_MAP);
                 }
@@ -105,6 +107,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private float getNumber(float v) {
+        return v /1000 *10;
+    }
 
 
 }
