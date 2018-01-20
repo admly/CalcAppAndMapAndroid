@@ -218,14 +218,29 @@
         app:layout_constraintTop_toBottomOf="@+id/etRRSO" />
 
     <Button
+        android:id="@+id/btPowrot"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:background="@color/colorPrimary"
+        android:text="Powrot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.689"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDoSplaty"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
         android:id="@+id/btToMap"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
+        android:background="@color/colorPrimary"
         android:text="Biorę kredyt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.324"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDoSplaty" />
+        app:layout_constraintTop_toBottomOf="@+id/etDoSplaty"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

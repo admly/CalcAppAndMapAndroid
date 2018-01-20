@@ -1,8 +1,11 @@
 package pl.testapp.am.calcapp;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +25,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public static final double LAT = 51.75924850;
     public static final double LNG = 19.45598330;
-    public static final String TEXT_WELCOME = "Okrąg pokazuje obszar naszego działania, kliknij, by sprawdzić czy jesteś w zasięgu";
+    public static final String TEXT_WELCOME = "Okrąg pokazuje obszar darmowej dostawy, kliknij, by sprawdzić czy jesteś w zasięgu";
     public static final String TEXT_POZA_OBSZAREM = "Poza obszarem, prowadzimy działalność w zasięgu zaznaczonego koła";
-    public static final String TEXT_W_OBSZARZE = "W obszarze działania";
-    private static final String INITIAL_TEXT_MAP = "Tu pojawią się koszty dostawy, jesli znajdziesz się poza obszarem naszego działania";
+    public static final String TEXT_W_OBSZARZE = "W obszarze darmowej dostawy";
+    private static final String INITIAL_TEXT_MAP = "Tu pojawią się koszty dostawy, jesli znajdziesz się poza obszarem darmowej dostawy";
 
     private GoogleMap mMap;
     private Circle circle;
     private LatLng latlng;
     DecimalFormat formatter = new DecimalFormat("#.00");
     TextView tvMap;
+    Button btZamawiam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
 
@@ -60,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         tvMap = (TextView) findViewById(R.id.tvMap);
+        btZamawiam = (Button) findViewById(R.id.btZamawiam);
         tvMap.setText(INITIAL_TEXT_MAP);
         latlng = new LatLng(LAT, LNG);
         mMap = googleMap;
@@ -82,12 +85,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Toast.makeText(getBaseContext(), TEXT_POZA_OBSZAREM, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), TEXT_W_OBSZARZE, Toast.LENGTH_SHORT).show();
+                    tvMap.setText(INITIAL_TEXT_MAP);
                 }
                 circle = mMap.addCircle(new CircleOptions().center(latlng).radius(300));
             }
+
+
+
         });
 
+        btZamawiam.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), OrderActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
 
     }
 

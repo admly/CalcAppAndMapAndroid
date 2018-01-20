@@ -2,6 +2,7 @@ package pl.testapp.am.calcapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ public class CalcActivity extends Activity {
     EditText etProwizja;
     EditText etOdsetki;
     Button btToMap;
+    Button btPowrot;
     EditText etRRSO;
     EditText etDoSplaty;
     private int progressKwotaKr;
@@ -44,6 +46,7 @@ public class CalcActivity extends Activity {
         sbIleDni = findViewById(R.id.sbIleDni);
 
         btToMap = findViewById(R.id.btToMap);
+        btPowrot = findViewById(R.id.btPowrot);
 
         etProwizja = findViewById(R.id.etProwizja);
         etOdsetki = findViewById(R.id.etOdsetki);
@@ -86,6 +89,17 @@ public class CalcActivity extends Activity {
                 startActivityForResult(myIntent, 0);
             }
         });
+
+        btPowrot.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), MidClass.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+
     }
     public void setParametryKredytu(){
         tvKwotaKredytu.setText(""+String.valueOf(kwotaKredytu)+WALUTA);
